@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/003-php-password-generator/CV-Lettre-Motivation" vcs="Git" />
   </component>
 </project>
