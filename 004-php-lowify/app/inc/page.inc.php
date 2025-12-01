@@ -16,6 +16,28 @@ class HTMLPage
         $this->title = $title;
     }
 
+    /* ---------------------------------------------
+        IMPORTÉ depuis ton ancienne classe
+       --------------------------------------------- */
+
+    public function addCSS(string $href): self
+    {
+        return $this->addStylesheet($href);
+    }
+
+    public function addJS(string $src): self
+    {
+        return $this->addScript($src);
+    }
+
+    public function setContent(string $html): self
+    {
+        $this->content = $html;
+        return $this;
+    }
+
+    /* --------------------------------------------- */
+
     public function setupBootstrap(array $bodyAttributes = []): self
     {
         foreach ($bodyAttributes as $name => $value) {
@@ -24,10 +46,10 @@ class HTMLPage
         $this->addHead('<meta charset="utf-8">');
         $this->addHead('<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">');
         $this->addHead(<<<HTML
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 HTML);
         $this->addHead(<<<HTML
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 HTML);
         return $this;
     }
@@ -41,7 +63,6 @@ HTML);
     public function setupNavigationTransition(): self
     {
         $this->addRawStyle("@view-transition {navigation: auto;}");
-
         return $this;
     }
 
@@ -89,10 +110,8 @@ HTML);
 
     public function render(): string
     {
-        $headsHtml = '';
-        foreach ($this->heads as $head) {
-            $headsHtml .= $head . "\n";
-        }
+        // HEAD
+        $headsHtml = implode("\n", $this->heads) . "\n";
 
         $stylesheetsHtml = '';
         foreach ($this->stylesheets as $href) {
@@ -101,13 +120,10 @@ HTML);
 
         $rawStylesHtml = '';
         foreach ($this->rawStyles as $style) {
-            $rawStylesHtml .= <<<HTML
-<style type="text/css">
-$style
-</style>
-HTML;
+            $rawStylesHtml .= "<style>$style</style>\n";
         }
 
+        // SCRIPTS
         $scriptsHtml = '';
         foreach ($this->scripts as $src) {
             $scriptsHtml .= "<script src=\"$src\"></script>\n";
@@ -115,25 +131,22 @@ HTML;
 
         $rawScriptsHtml = '';
         foreach ($this->rawScripts as $script) {
-            $rawScriptsHtml .= <<<HTML
-<script type="text/javascript">
-$script
-</script>
-HTML;
+            $rawScriptsHtml .= "<script>$script</script>\n";
         }
 
+        // BODY ATTRS
         $bodyAttributes = '';
         if (!empty($this->bodyAttributes)) {
-            $attributes = [];
-            foreach ($this->bodyAttributes as $name => $value) {
-                $attributes[] = $name . '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
+            $pairs = [];
+            foreach ($this->bodyAttributes as $n => $v) {
+                $pairs[] = $n . '="' . htmlspecialchars($v, ENT_QUOTES) . '"';
             }
-            $bodyAttributes = implode(' ', $attributes);
+            $bodyAttributes = implode(' ', $pairs);
         }
 
         return <<<HTML
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         $headsHtml
         $stylesheetsHtml
@@ -149,3 +162,4 @@ HTML;
 HTML;
     }
 }
+
