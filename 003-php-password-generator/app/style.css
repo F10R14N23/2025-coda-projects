@@ -1,0 +1,66 @@
+body {
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    padding-top: 200px;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    margin-bottom: 40px;
+    color: #2980b9;
+}
+
+.password-box {
+    background: #e4e4e4;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 40px;
+    font-weight: bold;
+    word-break: break-all;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+select, input[type="checkbox"] {
+    cursor: pointer;
+}
+
+select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+button {
+    padding: 10px;
+    margin-top: 20px;
+    border-color: #2980b9;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 16px;
+}
+
